@@ -12,22 +12,21 @@ import ssl
 
 #energy = pd.read_excel('Energy Indicators.xls')#.drop(energy.columns[0:1],axis=1)
 #energy = energy.drop(energy.columns[0:1],axis=1)
-#energy = energy[16:245]
+#energy = energy[0:242]
+#energy = energy.reset_index() 
 #energy.drop(['Unnamed: 1'],axis=1)
+
 #del energy['Unnamed: 1']
+#del energy['level_0']
+#del energy['index']
+
 #energy.columns = ['Country', 'Energy Supply', 'Energy Supply per Capita', '% Renewable']
 #energy.drop(['X'],axis=1)
 #energybackup=energy.copy()
 #energy=energybackup.copy()
-
+#energybackup2=energy.copy()  - all edits done, next is delete the last 2 NA rows
 
 #energy['Energy Supply'] = energy['Energy Supply']*1000000
-
-#print(energy[0:5])
-#print (ScimEn.head(10))
-#print (Z.head(10))
-
-
 #energy = energy.replace('...',np.NaN,inplace=True )
 #energy.fillna(np.NaN)
 
@@ -36,7 +35,10 @@ import ssl
 
 #energy = energy.fillna(np.NaN)
 
-energy.loc[energy.Country == "Republic of Korea", 'Country'] = "South Korea"
+#energy.loc[energy.Country == "Republic of Korea", 'Country'] = "South Korea"
+#energy.loc[energy.Country == "United States of America20", 'Country'] = "United States"
+#energy.loc[energy.Country == "United Kingdom of Great Britain and Northern Ireland19", 'Country'] = "United Kingdom"
+#energy.loc[energy.Country == "China, Hong Kong Special Administrative Region3", 'Country'] = "Hong Kong"
 
 #d.loc[d.sales == 12, 'sales'] = 99
 
@@ -45,7 +47,7 @@ energy.loc[energy.Country == "Republic of Korea", 'Country'] = "South Korea"
 #energy.set_value
 #energy.ix
 
-print(energy[164:167])
+print(energy[210:])
 
 def answer_one():
     return "ANSWER"
