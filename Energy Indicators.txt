@@ -46,6 +46,53 @@ import ssl
 #energy.loc[energy['Country'] == "South Korea"].index[0]
 #energy.set_value
 #energy.ix
+#d.loc[d.sales == 12, 'sales'] = 99
+#energy.drop(energy.index[len(energy)-2])
+#del energy[energy.index[228]]
+#energy.drop[energy.Country == "Nan"]
+#energy = energy[0:227]
+#=================================================================
+
+#ScimEn = pd.read_excel('scimagojr-3.xlsx') #.drop(energy.columns[0:1],axis=1)
+#ScimEnbackup = ScimEn.copy()
+#=================================================================
+
+#GDP = pd.read_csv('world_bank.csv',skiprows=4) #.drop(energy.columns[0:1],axis=1)
+#GDPbackup = GDP.copy()
+
+
+#changed country name to country as i was getting a synta error, dunno why..
+#GDP.loc[GDP.Country == "Korea, Rep.", 'Country Name'] = "South Korea"
+#GDP.loc[GDP.Country == "Iran, Islamic Rep.", 'Country Name'] = "Iran"
+#GDP.loc[GDP.Country == "Hong Kong SAR, China", 'Country Name'] = "Hong Kong"
+#GDP.set_index = GDP[Country Name]
+#print(GDP.head)
+#=================================================================
+
+#a = pd.merge(energy,GDP.iloc[:, [0,-11,-10,-9,-8-7,-6,-5,-4,-3,-2,-1]], how='inner', left_on='Country', right_on='Country')
+#a= energy.merge(GDP[list('2006'-'2015')])
+b = pd.merge(a,ScimEn[0:18], how='inner', left_on='Country', right_on='Country')
+
+print(a.head(4))
+#print(a.count) #[183 rows x 14 columns]>
+
+print(b.count)
+
+#=================================================================
+
+#a = pd.merge(energy,GDP.iloc[:, [0,-11,-10,-9,-8-7,-6,-5,-4,-3,-2,-1]], how='inner', left_on='Country', right_on='Country')
+#a= energy.merge(GDP[list('2006'-'2015')])
+#b = pd.merge(a,ScimEn[0:18], how='inner', left_on='Country', right_on='Country')
+#b.set_index(['Country'], inplace=True)
+#b.rename(columns={'Country Name': 'Countryz'}) #didt work
+
+#del b[Country Name]
+print(b.head(4))
+#print(a.count) #[183 rows x 14 columns]>
+
+#=================================================================
+print(energy[220:])
+
 
 print(energy[210:])
 
