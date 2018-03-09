@@ -1,0 +1,44 @@
+
+import numpy as np
+import pandas as pd
+import urllib
+import requests
+import csv
+import pandas as pd
+import os
+import xlrd
+import ssl    
+
+
+#energy = pd.read_excel('Energy Indicators.xls')#.drop(energy.columns[0:1],axis=1)
+#energy = energy.drop(energy.columns[0:1],axis=1)
+#energy = energy[16:245]
+#energy.drop(['Unnamed: 1'],axis=1)
+#del energy['Unnamed: 1']
+#energy.columns = ['Country', 'Energy Supply', 'Energy Supply per Capita', '% Renewable']
+#energy.drop(['X'],axis=1)
+#energybackup=energy.copy()
+#energy=energybackup.copy()
+
+
+#energy['Energy Supply'] = energy['Energy Supply']*1000000
+
+#print(energy[0:5])
+#print (ScimEn.head(10))
+#print (Z.head(10))
+
+
+#energy = energy.replace('...',np.NaN,inplace=True )
+#energy.fillna(np.NaN)
+
+#print(energy[energy.isnull()])
+
+#print(energy)
+
+energy = energy.fillna(np.NaN, inplace=True)
+
+
+print(energy[0:5])
+
+def answer_one():
+    return "ANSWER"
