@@ -1,0 +1,628 @@
+python code
+
+To create an environment, use conda create -n env_name list of packages in your terminal. Here -n env_name sets the name of your environment (-n for name) and list of packages is the list of packages you want installed in the environment. For example, to create an environment named my_env and install numpy in it, type conda create -n my_env numpy
+
+ou can specify which version of Python to install in the environment. This is useful when you're working with code in both Python 2.x and Python 3.x. To create an environment with a specific Python version, do something like conda create -n py3 python=3 or conda create -n py2 python=2
+
+Entering an environment
+On Windows, use activate my_env
+
+check this out with conda list. Installing packages in the environment is the same as before: conda install package_name. Only this time, the specific packages you install will only be available when you're in the environment. To leave the environment, type source deactivate (on OSX/Linux). On Windows, use deactivate
+
+Saving and loading environments
+A really useful feature is sharing environments so others can install all the packages used in your code, with the correct versions. You can save the packages to a YAML file with conda env export > environment.yaml. The first part conda env export writes out all the packages in the environment, including the Python version.
+
+Above you can see the name of the environment and all the dependencies (along with versions) are listed. The second part of the export command, > environment.yaml writes the exported text to a YAML file environment.yaml. This file can now be shared and others will be able to create the same environment you used for the project.
+
+To create an environment from an environment file use conda env create -f environment.yaml. This will create a new environment with the same name listed in environment.yaml.
+
+Listing environments
+If you forget what your environments are named (happens to me sometimes), use conda env list to list out all the environments you've created. You should see a list of environments, there will be an asterisk next to the environment you're currently in. The default environment, the environment used when you aren't in one, is called root.
+
+Removing environments
+If there are environments you don't use anymore, conda env remove -n env_name will remove the specified environment (here, named env_name).
+
+=========
+Best practices
+Using environments
+One thing that’s helped me tremendously is having separate environments for Python 2 and Python 3. I used conda create -n py2 python=2 and conda create -n py3 python=3 to create two separate environments, py2 and py3. Now I have a general use environment for each Python version. In each of those environments, I've installed most of the standard data science packages (numpy, scipy, pandas, etc.). Remember that when you set up an environment initially, you'll only start with the standard packages and whatever packages you specify in your conda create statement.
+
+I’ve also found it useful to create environments for each project I’m working on. It works great for non-data related projects too like web apps with Flask. For example, I have an environment for my personal blog using Pelican.
+
+Sharing environments
+When sharing your code on GitHub, it's good practice to make an environment file and include it in the repository. This will make it easier for people to install all the dependencies for your code. I also usually include a pip requirements.txt file using pip freeze (learn more here) for people not using conda.
+============
+Use + to concatenate lists.
+Use `*` to repeat lists.
+Use the in operator to check if something is inside a list.
+
+
+==
+regressio analysis
+
+y = melbourne_data.Price
+melbourne_predictors = ['Rooms', 'Bathroom', 'Landsize', 'BuildingArea', 'YearBuilt', 'Lattitude', 'Longtitude']
+X = melbourne_data[melbourne_predictors]
+# Define model
+melbourne_model = DecisionTreeRegressor()
+
+# Fit model
+melbourne_model.fit(X, y)
+print("Making predictions for the following 5 houses:")
+print(X.head())
+print("The predictions are")
+print(melbourne_model.predict(X.head()))
+==
+from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
+
+# split data into training and validation data, for both predictors and target
+# The split is based on a random number generator. Supplying a numeric value to
+# the random_state argument guarantees we get the same split every time we
+# run this script.
+
+train_X, val_X, train_y, val_y = train_test_split(X, y,random_state = 0)
+# Define model
+melbourne_model = DecisionTreeRegressor()
+# Fit model
+melbourne_model.fit(train_X, train_y)
+
+# get predicted prices on validation data
+val_predictions = melbourne_model.predict(val_X)
+print(mean_absolute_error(val_y, val_predictions))
+MAE - On average, our predictions are off by about X
+
+from sklearn.metrics import mean_absolute_error
+from sklearn.tree import DecisionTreeRegressor
+
+def get_mae(max_leaf_nodes, predictors_train, predictors_val, targ_train, targ_val):
+    model = DecisionTreeRegressor(max_leaf_nodes=max_leaf_nodes, random_state=0)
+    model.fit(predictors_train, targ_train)
+    preds_val = model.predict(predictors_val)
+    mae = mean_absolute_error(targ_val, preds_val)
+    return(mae)
+=
+Random Forests
+forest_model = RandomForestRegressor()
+forest_model.fit(train_X, train_y)
+melb_preds = forest_model.predict(val_X)
+print(mean_absolute_error(val_y, melb_preds))
+
+TEST DATA
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
+
+# Read the data
+train = pd.read_csv('../input/train.csv')
+
+# pull data into target (y) and predictors (X)
+train_y = train.SalePrice
+predictor_cols = ['LotArea', 'OverallQual', 'YearBuilt', 'TotRmsAbvGrd']
+
+# Create training predictors data
+train_X = train[predictor_cols]
+
+my_model = RandomForestRegressor()
+my_model.fit(train_X, train_y)
+
+# Read the test data
+test = pd.read_csv('../input/test.csv')
+# Treat the test data in the same way as training data. In this case, pull same columns.
+test_X = test[predictor_cols]
+# Use the model to make predictions
+predicted_prices = my_model.predict(test_X)
+# We will look at the predicted prices to ensure we have something sensible.
+print(predicted_prices)
+
+===
+Prepare Submission File
+
+We make submissions in CSV files. Your submissions usually have two columns: an ID column and a prediction column. The ID field comes from the test data (keeping whatever name the ID field had in that data, which for the housing data is the string 'Id'). The prediction column will use the name of the target field.
+
+We will create a DataFrame with this data, and then use the dataframe's to_csv method to write our submission file. Explicitly include the argument index=False to prevent pandas from adding another column in our csv file
+
+my_submission = pd.DataFrame({'Id': test.Id, 'SalePrice': predicted_prices})
+# you could use any filename. We choose submission here
+my_submission.to_csv('submission.csv', index=False)
+===
+
+1) A Simple Option: Drop Columns with Missing Values¶
+
+ou'll have both a training dataset and a test dataset. You will want to drop the same columns in both DataFrames. In that case, you would write
+
+cols_with_missing = [col for col in original_data.columns 
+                                 if original_data[col].isnull().any()]
+redued_original_data = original_data.drop(cols_with_missing, axis=1)
+reduced_test_data = test_data.drop(cols_with_missing, axis=1)
+
+=
+2) A Better Option: Imputation
+Imputation fills in the missing value with some number. The imputed value won't be exactly right in most cases, but it usually gives more accurate models than dropping the column entirely.
+
+This is done with
+
+from sklearn.preprocessing import Imputer
+my_imputer = Imputer()
+data_with_imputed_values = my_imputer.fit_transform(original_data)
+=
+# make copy to avoid changing original data (when Imputing)
+new_data = original_data.copy()
+
+# make new columns indicating what will be imputed
+cols_with_missing = (col for col in new_data.columns 
+                                 if new_data[c].isnull().any())
+for col in cols_with_missing:
+    new_data[col + '_was_missing'] = new_data[col].isnull()
+
+# Imputation
+my_imputer = Imputer()
+new_data = my_imputer.fit_transform(new_data)
+\\
+df.isnull().any() generates a boolean array (True if the column has a missing value, False otherwise). You can use it to index into df.columns:
+
+df.columns[df.isnull().any()]
+will return a list of the columns which have missing values.
+=
+
+Basic Problem Set-up
+In [1]:
+import pandas as pd
+
+# Load data
+melb_data = pd.read_csv('../input/melbourne-housing-snapshot/melb_data.csv')
+
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
+
+melb_target = melb_data.Price
+melb_predictors = melb_data.drop(['Price'], axis=1)
+
+# For the sake of keeping the example simple, we'll use only numeric predictors. 
+melb_numeric_predictors = melb_predictors.select_dtypes(exclude=['object'])
+=
+y = melb_target
+X = melb_data[melb_numeric_predictors2]
+print(7*8)
+#print(melb_numeric_predictors.columns)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y,random_state = 0) 
+#score_dataset(X_train, X_test, y_train, y_test) 
+
+=====
+
+Best Prepare Your Data For Naive Bayes
+Categorical Inputs: Naive Bayes assumes label attributes such as binary, categorical or nominal.
+Gaussian Inputs: If the input variables are real-valued, a Gaussian distribution is assumed. In which case the algorithm will perform better if the univariate distributions of your data are Gaussian or near-Gaussian. This may require removing outliers (e.g. values that are more than 3 or 4 standard deviations from the mean).
+Classification Problems: Naive Bayes is a classification algorithm suitable for binary and multiclass classification.
+Log Probabilities: The calculation of the likelihood of different class values involves multiplying a lot of small numbers together. This can lead to an underflow of numerical precision. As such it is good practice to use a log transform of the probabilities to avoid this underflow.
+Kernel Functions: Rather than assuming a Gaussian distribution for numerical input values, more complex distributions can be used such as a variety of kernel density functions.
+Update Probabilities: When new data becomes available, you can simply update the probabilities of your model. This can be helpful if the data changes frequently.
+
+Advantages and Disadvantage of Naive Bayes classifier
+Advantages
+Naive Bayes Algorithm is a fast, highly scalable algorithm.
+Naive Bayes can be use for Binary and Multiclass classification. It provides different types of Naive Bayes Algorithms like GaussianNB, MultinomialNB, BernoulliNB.
+It is a simple algorithm that depends on doing a bunch of counts.
+Great choice for Text Classification problems. It’s a popular choice for spam email classification.
+It can be easily train on small dataset
+Disadvantages
+It considers all the features to be unrelated, so it cannot learn the relationship between features. E.g., Let’s say Remo is going to a part. While cloth selection for the party, Remo is looking at his cupboard. Remo likes to wear a white color shirt. In Jeans, he likes to wear a brown Jeans, But Remo doesn’t like wearing a white shirt with Brown Jeans. Naive Bayes can learn individual features importance but can’t determine the relationship among features.
+
+This stands in contrast to the instinctive way humans often behave, where, having concluded that they should not believe in Bookcase Aliens on the basis of the evidence in front of them, they discard that evidence entirely, denounce it, and say that it was never any evidence at all. (This is "treating arguments like soldiers" and acting like any evidence in favor of a proposition has to be "defeated.")
+
+The Bayesian just says "yes, that is evidence in favor of the claim, but it's not quantitatively enough evidence." This idiom also stands in contrast to the practice of treating any concession an opponent makes as a victory. If true claims are supposed to have all their arguments upheld and false claims are supposed to have all their enemy arguments defeated, then a single undefeated claim of support stands as a proof of victory, no matter how strong or weak the evidence that it provides. Not so with Bayesians — a Bayesian considers the bookcase observation to be locally a piece of evidence favoring Bookcase Aliens, just massively insufficient evidence.
+///////////
+The Weber-Fechner law says that most human sensory perceptions are logarithmic, in the sense that a factor-of-2 intensity change feels like around the same amount of increase no matter where you are on the scale. Doubling the physical intensity of a sound feels to a human like around the same amount of change in that sound whether the initial sound was 40 decibels or 60 decibels. That's why there's an exponential decibel scale of sound intensities in the first place!
+
+Thus the log-odds form should be, in a certain sense, the most intuitive variant of Bayes' rule to use: Just add the evidence-strength to the belief-strength! If you can make your feelings of evidence-strength and belief-strength be proportional to the logarithms of ratios, that is.
+
+Finally, the log-odds representation gives us an even easier way to see how extraordinary claims require extraordinary evidence: If your prior belief in H is -30 bits, and you see evidence on the order of +5 bits for H, then you're going to wind up with -25 bits of belief in H, which means you still think it's far less likely than the alternatives.
+///////////////
+In the case of discrete inputs (indicator or frequency features for discrete events), naive Bayes classifiers form a generative-discriminative pair with (multinomial) logistic regression classifiers: each naive Bayes classifier can be considered a way of fitting a probability model that optimizes the joint likelihood {\displaystyle p(C,\mathbf {x} )} p(C,{\mathbf  {x}}), while logistic regression fits the same probability model to optimize the conditional {\displaystyle p(C\mid \mathbf {x} )} {\displaystyle p(C\mid \mathbf {x} )}
+==============
+
+you'll need str(), to convert a value into a string. str(savings), for example, will convert the float savings to a string.
+
+Similar functions such as int(), float() and bool() will help you convert Python values into any type.
+
+===
+
+11. Representation Does Not Imply Learnable
+Just because a function can be represented, does not mean that the function can actually be learnt. Restrictions imposed by data, time and memory, limit the functions that can actually be learnt in a feasible manner. For example, decision tree learners can not learn trees with more leaves than the number of training data points. The right question to ask is "whether a function can be learnt" and not "whether a function can be represented".
+
+1. Learning = Representation + Evaluation + Optimization
+All machine learning algorithms have three components:
+
+Representation for a learner is the set if classifiers/functions that can be possibly learnt. This set is called hypothesis space. If a function is not in hypothesis space, it can not be learnt.
+Evaluation function tells how good the machine learning model is.
+Optimisation is the method to search for the most optimal learning model.
+=====
+matplotlib
+
+# Change the line plot below to a scatter plot
+
+plt.scatter(gdp_cap, life_exp)
+
+
+# Put the x-axis on a logarithmic scale
+
+plt.xscale('log')
+
+=
+
+Querying a Series pandas
+s.iloc[2] - query by index
+s.lo['golf'] - query by manually stored created index
+s.loc[5]=45; adds to series s, value 4, with index 5
+
+
+# Dataframe Indexing and Loading
+df['Location'] = None  - addds extra column to dataframe
+costs+=2   -iterate,add on a col
+
+!cat olympics.csv - shell commad,read csv
+=
+
+df = pd.read_csv('olympics.csv', index_col = 0, skiprows=1)
+index_col = 0; use first col as index; skiprows =1, use 1st row as column headers
+
+# Querying a DataFrame
+only_gold = df.where(df['Gold'] > 0)
+df[(df['Gold.1'] > 0) & (df['Gold'] == 0)]
+
+# Indexing Dataframes
+df['country'] = df.index #create new col country
+df = df.set_index('Gold') #set gold as index, - this call destroys the preset index gold
+
+df = df.set_index(['STNAME', 'CTYNAME'])
+df.head()
+
+#see 2 elements/rows of a multi-labeled index df, series pandas.. -hierarchically index 
+df.loc[ [('Michigan', 'Washtenaw County'),
+         ('Michigan', 'Wayne County')] ]
+
+
+#test
+df = df.set_index([df.index, 'Name'])
+df.index.names = ['Location', 'Name']
+df = df.append(pd.Series(data={'Cost': 3.00, 'Item Purchased': 'Kitty Food'}, name=('Store 2', 'Kevyn')))
+df
+
+# Merging Dataframes
+staff_df = pd.DataFrame([{'Name': 'Kelly', 'Role': 'Director of HR'},
+                         {'Name': 'Sally', 'Role': 'Course liasion'},
+                         {'Name': 'James', 'Role': 'Grader'}])
+staff_df = staff_df.set_index('Name')
+student_df = pd.DataFrame([{'Name': 'James', 'School': 'Business'},
+                           {'Name': 'Mike', 'School': 'Law'},
+                           {'Name': 'Sally', 'School': 'Engineering'}])
+student_df = student_df.set_index('Name')
+
+pd.merge(staff_df, student_df, how='outer', left_index=True, right_index=True)
+how - is for merge type, left,right index for index to e used for joininh, index can be col name as below.
+=
+products = products.reset_index()
+
+invoices=invoices.reset_index()
+###reset index before merging dataframes
+pd.merge(staff_df, student_df, how='left', left_on='Name', right_on='Name') - you can also use indices to join them
+
+
+#Idiomatic Pandas: Making Code Pandorable
+
+
+======
+#applying a fn across a df,use applymap across a row, apply.
+import numpy as np
+def min_max(row):
+    data = row[['POPESTIMATE2010',
+                'POPESTIMATE2011',
+                'POPESTIMATE2012',
+                'POPESTIMATE2013',
+                'POPESTIMATE2014',
+                'POPESTIMATE2015']]
+    return pd.Series({'min': np.min(data), 'max': np.max(data)})
+#or - row['max'] = np.max(data)
+    row['min'] = np.min(data)
+    return row
+
+
+df.apply(min_max, axis=1)
+====
+lambda 
+
+rows = ['POPESTIMATE2010',
+        'POPESTIMATE2011',
+        'POPESTIMATE2012',
+        'POPESTIMATE2013',
+        'POPESTIMATE2014',
+        'POPESTIMATE2015']
+df.apply(lambda x: np.max(x[rows]), axis=1)
+
+=====
+# Group by
+for group, frame in df.groupby('STNAME'):
+    avg = np.average(frame['CENSUS2010POP'])
+    print('Counties in state ' + group + ' have an average population of ' + str(avg))
+==>group fn, groupby stname, avg = avg frame census2010pop, print out result
+==========
+
+df = df.set_index('STNAME')
+
+def fun(item):
+    if item[0]<'M': #all states before letter m
+        return 0
+    if item[0]<'Q': #all states before letter q
+        return 1
+    return 2
+
+for group, frame in df.groupby(fun):
+    print('There are ' + str(len(frame)) + ' records in group ' + str(group) + ' for processing.')
+
+set index 1st, use group fn & fun (we define) fn to segmet data. typically usued to reistribute work.
+
+===============
+
+df.groupby('STNAME').agg({'CENSUS2010POP': np.average})
+==> this is to group, then apply a fun across a column; gives the avg census.. over the states; similar to r's tapply fn.
+
+==> finally did it
+print(df)
+
+import numpy as np
+
+# Your code here
+df['Total']= df['Weight (oz.)']*df['Quantity']
+
+#df['Total']= 'Weight (oz.)'*int('Quantity')
+
+print(df)
+
+
+#def a(Weight):
+ 
+# Total = Weight*Quantity
+  
+#return Total 
+  
+df.groupby('Category').agg({'Total': np.sum})
+
+
+========////
+(df.set_index('STNAME').groupby(level=0)['CENSUS2010POP']
+    .agg({'avg': np.average, 'sum': np.sum}))
+
+#series groupy above
+#dfgroupby below
+(df.set_index('STNAME').groupby(level=0)['POPESTIMATE2010','POPESTIMATE2011']
+    .agg({'avg': np.average, 'sum': np.sum}))
+
+# NOTE !!!!!!!!!!!!!!
+(df.set_index('STNAME').groupby(level=0)['POPESTIMATE2010','POPESTIMATE2011']
+    .agg({'POPESTIMATE2010': np.average, 'POPESTIMATE2011': np.sum}))
+
+==>do not pass the col name again,same name in the .agg field as pandas will apply function(np.sum in this case) to the col directly and not create a new hieririchal col
+==
+#scales 
+categor/nominal data
+df['Grades'].astype('category').head()
+grades = df['Grades'].astype('category',
+                             categories=['D', 'D+', 'C-', 'C', 'C+', 'B-', 'B', 'B+', 'A-', 'A', 'A+'],
+                             ordered=True)
+why we order, cus ordered data has boolean masking true and false, so we can make coparisons suh as
+grades > 'C'
+
+===
+# reduce ratio/inteval data to categorical data, esp for things like histograms.
+the fn cut does that, takes in no of bins which are equally spaced.
+
+df = pd.read_csv('census.csv')
+df = df[df['SUMLEV']==50]
+df = df.set_index('STNAME').groupby(level=0)['CENSUS2010POP'].agg({'avg': np.average})
+pd.cut(df['avg'],10)
+
+# You can also add labels for the sizes [Small < Medium < Large].
+
+pd.cut(s, 3, labels=['Small', 'Medium', 'Large'])
+===============
+
+#pivot tables
+df.pivot_table(values='(kW)', index='YEAR', columns='Make', aggfunc=np.mean)
+==> value is what we are trying to get the mean of..
+df.pivot_table(values='(kW)', index='YEAR', columns='Make', aggfunc=[np.mean,np.min], margins=True)
+=>margins true, will show overall min/max at the end of the table
+->pass any fn to the ..add fn, includ those i define myself
+
+ttest=
+# Your code here  -  index='YEAR'
+
+print(Bikes.pivot_table(values='Price', columns=('Bike Type','Manufacturer'), aggfunc=np.mean))
+
+
+print(Bikes.pivot_table(values='Price', columns=('Manufacturer','Bike Type'), aggfunc=np.mean))
+
+solu=
+print(pd.pivot_table(Bikes, index=['Manufacturer','Bike Type']))
+===
+
+# Date Functionality in Pandas
+>>>>>Timestamp
+pd.Timestamp('9/1/2016 10:05AM')
+
+
+>>>>>>>Period
+pd.Period('1/2016')
+Period('2016-01', 'M')
+
+pd.Period('3/5/2016')
+Period('2016-03-05', 'D')
+
+>>>>>>DatetimeIndex
+
+t1 = pd.Series(list('abc'), [pd.Timestamp('2016-09-01'), pd.Timestamp('2016-09-02'), pd.Timestamp('2016-09-03')])
+t1
+2016-09-01    a
+2016-09-02    b
+2016-09-03    c
+dtype: object
+
+type(t1.index)
+pandas.tseries.index.DatetimeIndex
+
+>>>>>>>PeriodIndex
+t2 = pd.Series(list('def'), [pd.Period('2016-09'), pd.Period('2016-10'), pd.Period('2016-11')])
+t2
+2016-09    d
+2016-10    e
+2016-11    f
+Freq: M, dtype: object
+pandas.tseries.period.PeriodIndex
+
+### Converting to Datetime
+d1 = ['2 June 2013', 'Aug 29, 2014', '2015-06-26', '7/12/16']
+ts3 = pd.DataFrame(np.random.randint(10, 100, (4,2)), index=d1, columns=list('ab'))
+ts3
+
+		a	b
+2 June 2013	19	39
+Aug 29, 2014	54	84
+2015-06-26	75	58
+7/12/16		46	27
+
+ts3.index = pd.to_datetime(ts3.index)
+ts3
+==>change data format to a good order
+		a	b
+2013-06-02	19	39
+2014-08-29	54	84
+2015-06-26	75	58
+2016-07-12	46	27
+
+### Timedeltas - are differences in time
+
+pd.Timestamp('9/3/2016')-pd.Timestamp('9/1/2016')
+Timedelta('2 days 00:00:00')
+
+pd.Timestamp('9/2/2016 8:10AM') + pd.Timedelta('12D 3H')
+Timestamp('2016-09-14 11:10:00')
+
+###Working with Dates in a Dataframe
+
+dates = pd.date_range('10-01-2016', periods=9, freq='2W-SUN')
+dates
+
+DatetimeIndex(['2016-10-02', '2016-10-16', '2016-10-30', '2016-11-13',
+               '2016-11-27', '2016-12-11', '2016-12-25', '2017-01-08',
+               '2017-01-22'],
+              dtype='datetime64[ns]', freq='2W-SUN')
+
+df = pd.DataFrame({'Count 1': 100 + np.random.randint(-5, 10, 9).cumsum(),
+                  'Count 2': 120 + np.random.randint(-5, 10, 9)}, index=dates)
+df
+
+		Count 1	Count 2
+2016-10-02	104	125
+2016-10-16	109	122
+2016-10-30	111	127
+2016-11-13	117	126
+2016-11-27	114	126
+2016-12-11	109	121
+2016-12-25	105	126
+2017-01-08	105	125
+2017-01-22	101	123
+
+
+df.index.weekday_name = chk day of the wee date is on
+array(['Sunday', 'Sunday', 'Sunday', 'Sunday', 'Sunday', 'Sunday',
+       'Sunday', 'Sunday', 'Sunday'], dtype=object)
+
+df.diff() - diff btw each dates value.
+df.resample('M').mean() - mean each month in sample
+
+******partial indexing to find info from a particulatr set. e,g yr df['2017'] or month df['2016-12'] or range df['2016-12':]
+
+df.asfreq('W', method='ffill') - change freq of dates in our table to weekly we will get missing vales, so we use forward fill in this code
+
+==>visalize timeseries
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+df.plot()
+================================ss
+
+### Distributions in Pandas
+
+np.random.binomial(1000, 0.5)/1000 - run random binom generator 1 or 0,prob set to .5 - siginifies head or tail
+we want to simulate the probability of flipping a fair coin 20 times, and getting a number greater than or equal to 15. Use np.random.binomial(n, p, size) to do 10000 simulations of flipping a fair coin 20 times
+print(sum((np.random.binomial(20, 0.5,10000))>15))
+
+chance_of_tornado = 0.01
+
+tornado_events = np.random.binomial(1, chance_of_tornado, 1000000)
+    
+two_days_in_a_row = 0
+for j in range(1,len(tornado_events)-1):
+    if tornado_events[j]==1 and tornado_events[j-1]==1:
+        two_days_in_a_row+=1
+
+print('{} tornadoes back to back in {} years'.format(two_days_in_a_row, 1000000/365))
+===============
+distri=
+np.random.uniform(0, 1)
+np.random.normal(0.75)   or gaussian
+
+distribution = np.random.normal(0.75,size=1000)
+np.sqrt(np.sum((np.mean(distribution)-distribution)**2)/len(distribution))
+np.std(distribution)
+
+======>shape of tail of distribution   -ve vale means curve is slightly ore flat than normal distrib; +ve meas slightly more peaky than normal distribution
+
+import scipy.stats as stats
+stats.kurtosis(distribution)
+
+stats.skew(distribution) - nt much sew as ge with norm distr template/desig
+
+chi_squared_df2 = np.random.chisquare(2, size=10000) #has 1 parameter degrees of freedom,leftskewed
+
+stats.skew(chi_squared_df2)
+
+chi_squared_df5 = np.random.chisquare(5, size=10000)
+stats.skew(chi_squared_df5)
+#as we increase the degrees of freed, the skew moves to the cetre, we chck plot with a map below:
+
+%matplotlib inline
+import matplotlib
+import matplotlib.pyplot as plt
+
+output = plt.hist([chi_squared_df2,chi_squared_df5], bins=50, histtype='step', 
+                  label=['2 degrees of freedom','5 degrees of freedom'])
+plt.legend(loc='upper right')
+
+===
+from scipy import stats
+stats.ttest_ind?
+=> test used for comparig info from a statisti df
+
+stats.ttest_ind(early['assignment1_grade'], late['assignment1_grade'])
+Ttest_indResult(statistic=1.400549944897566, pvalue=0.16148283016060577)
+=> pvalue higher than set 0.05 so we can not igore as it shows evidce of alternative hypo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
