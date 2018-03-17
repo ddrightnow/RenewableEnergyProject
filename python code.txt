@@ -1204,9 +1204,406 @@ print(m)
 u = 'In %d years I have spotted %g %s.' % (3, 0.1, 'camels')
 print(u)
 ===
+database 
+The module dbm provides an interface for creating and updating database files
+db = dbm.open('captions', 'c')
+Some dictionary methods, like keys and items, don’t work with database objects. But
+iteration with a for loop works:
+for key in db:
+print(key, db[key])
+As with other files, you should close the database when you are done:
+>>> db.close()
+=
+Pickling
+A limitation of dbm is that the keys and values have to be strings or bytes. If you try to use
+any other type, you get an error.
+The pickle module can help. It translates almost any type of object into a string suitable
+for storage in a database, and then translates strings back into objects
+pickle.dumps takes an object as a parameter and returns a string representation (dumps is
+short for “dump string”):
+>>> import pickle
+>>> t = [1, 2, 3]
+>>> pickle.dumps(t)
+b'\x80\x03]q\x00(K\x01K\x02K\x03e.'
+The format isn’t obvious to human readers; it is meant to be easy for pickle to interpret.
+pickle.loads (“load string”) reconstitutes the object:
+>>> t1 = [1, 2, 3]
+>>> s = pickle.dumps(t1)
+>>> t2 = pickle.loads(s)
+>>> t2
+[1, 2, 3]
 
+Although the new object has the same value as the old, it is not (in general) the same object:
+>>> t1 == t2
+True
+>>> t1 is t2
+False
+In other words, pickling and then unpickling has the same effect as copying the object.
+You can use pickle to store non-strings in a database. In fact, this combination is so common
+that it has been encapsulated in a module called shelve.
+==
 
+PIPES
+Any program that you can launch from the shell can also be launched from Python using
+a pipe object, which represents a running program.
+For example, the Unix command ls -l normally displays the contents of the current directory
+in long format. You can launch ls with os.popen1
+:
+>>> cmd = 'ls -l'
+>>> fp = os.popen(cmd)
+=
+The argument is a string that contains a shell command. The return value is an object that
+behaves like an open file. You can read the output from the ls process one line at a time
+with readline or get the whole thing at once with read:
+>>> res = fp.read()
+When you are done, you close the pipe like a file:
+>>> stat = fp.close()
+>>> print(stat)
+None
+The return value is the final status of the ls process; None means that it ended normally
+(with no errors).
+========
+The only problem with this example is that when you import the module it runs the test
+code at the bottom. Normally when you import a module, it defines new functions but it
+doesn’t run them.
+Programs that will be imported as modules often use the following idiom:
+if __name__ == '__main__':
+print(linecount('wc.py'))
+__name__ is a built-in variable that is set when the program starts. If the program is running
+as a script, __name__ has the value '__main__'; in that case, the test code runs. Otherwise,
+if the module is being imported, the test code is skipped.
+=================================
 
+---------------------Classes and objects----------------------
+blank = Point()
+print(blank)
+blank.x = 3.0
+=======
+p2 = copy.copy(p1) # for copying objects, ## scratch this -> normal copy() wont work
+If you use copy.copy to duplicate a Rectangle, you will find that it copies the Rectangle
+object but not the embedded Point.
+>>> box2 = copy.copy(box)
+>>> box2 is box
+False
+>>> box2.corner is box.corner
+True
+Figure 15.3 shows what the object diagram looks like. This operation is called a shallow
+copy because it copies the object and any references it contains, but not the embedded
+objects.
+For most applications, this is not what you want. In this example, invoking
+grow_rectangle on one of the Rectangles would not affect the other, but invoking
+move_rectangle on either would affect both! This behavior is confusing and error-prone
+==============
+
+Fortunately, the copy module provides a method named deepcopy that copies not only the
+object but also the objects it refers to, and the objects they refer to, and so on. You will not
+be surprised to learn that this operation is called a deep copy.
+>>> box3 = copy.deepcopy(box)
+>>> box3 is box
+False
+>>> box3.corner is box.corner
+False
+box3 and box are completely separate objects.
+=
+You can also use isinstance to check whether an object is an instance of a class:
+>>> isinstance(p, Point)
+True
+=
+If you are not sure whether an object has a particular attribute, you can use the built-in
+function hasattr:
+>>> hasattr(p, 'x')
+True
+>>> hasattr(p, 'z')
+False
+The first argument can be any object; the second argument is a string that contains the name
+of the attribute.
+You can also use a try statement to see if the object has the attributes you need:
+try:
+x = p.x
+except AttributeError:
+x = 0
+This approach can make it easier to write functions that work with different types
+==============
+---------------------Classes and functions----------------------
+
+Pure functions
+def add_time(t1, t2):
+sum = Time()
+sum.hour = t1.hour + t2.hour
+sum.minute = t1.minute + t2.minute
+sum.second = t1.second + t2.second
+return sum
+The function creates a new Time object, initializes its attributes, and returns a reference to
+the new object. This is called a pure function because it does not modify any of the objects
+passed to it as arguments and it has no effect, like displaying a value or getting user input,
+other than returning a value.
+=
+Modifiers
+Sometimes it is useful for a function to modify the objects it gets as parameters. In that case,
+the changes are visible to the caller. Functions that work this way are called modifiers
+
+write pure functions whenever it is reasonable and resort
+to modifiers only if there is a compelling advantage. This approach might be called a
+functional programming style.
+=
+def valid_time(time):
+if time.hour < 0 or time.minute < 0 or time.second < 0:
+return False
+if time.minute >= 60 or time.second >= 60:
+return False
+return True
+
+=
+###########use an assert statement, which checks a given invariant and raises an exception
+if it fails:
+def add_time(t1, t2):
+assert valid_time(t1) and valid_time(t2)
+seconds = time_to_int(t1) + time_to_int(t2)
+return int_to_time(seconds)
+==
+
+---------------------Classes and methods ----------------------
+=
+class Time:
+    def print_time(time):
+        print('%.2d:%.2d:%.2d' % (time.hour, time.minute, time.second))
+    
+    
+time2 = Time()
+time2.hour = 11
+time2.minute = 59
+time2.second = 30    
+    #print_time(time2)
+ 
+Time.print_time(time2)
+time2.print_time()
+=
+end = start.increment(1337, 460)
+TypeError: increment() takes 2 positional arguments but 3 were given
+The error message is initially confusing, because there are only two arguments in parentheses.
+But the subject is also considered an argument, so all together that’s three
+=
+a positional argument is an argument that doesn’t have a parameter name;
+sketch(parrot, cage, dead=True)
+parrot and cage are positional, and dead is a keyword argument
+=
+The init method
+The init method (short for “initialization”) is a special method that gets invoked when an
+object is instantiated. Its full name is __init__ (two underscore characters, followed by
+init, and then two more underscores). An init method for the Time class might look like
+this:
+# inside class Time:
+def __init__(self, hour=0, minute=0, second=0):
+self.hour = hour
+self.minute = minute
+self.second = second
+=
+The init method (short for “initialization”) is a special method that gets invoked when an
+object is instantiated. 
+__str__ is a special method, like __init__, that is supposed to return a string representation
+of an object.
+============[[[[[[[[[[[[[[[[[[[[****************
+if you define a method named __add__ for 
+a class, you can use the + operator on the objects
+=
+t's even possible to overload the "+" operator as well as all the other operators for the purposes of your own class. To do this, you need to understand the underlying mechanism. There is a special (or a "magic") method for every operator sign. The magic method for the "+" sign is the __add__ method. For "-" it is "__sub__" and so on.
+=
+Operator	Method
++	object.__add__(self, other)
+-	object.__sub__(self, other)
+*	object.__mul__(self, other)
+//	object.__floordiv__(self, other)
+/	object.__truediv__(self, other)
+%	object.__mod__(self, other)
+**	object.__pow__(self, other[, modulo])
+<<	object.__lshift__(self, other)
+>>	object.__rshift__(self, other)
+&	object.__and__(self, other)
+^	object.__xor__(self, other)
+|	object.__or__(self, other)
+==============
+Type-based dispatch
+=========
+In the previous section we added two Time objects, but you also might want to add an
+integer to a Time object. The following is a version of __add__ that checks the type of
+other and invokes either add_time or increment:
+# inside class Time:
+def __add__(self, other):
+if isinstance(other, Time):
+return self.add_time(other)
+else:
+return self.increment(other)
+def add_time(self, other):
+seconds = self.time_to_int() + other.time_to_int()
+return int_to_time(seconds)
+def increment(self, seconds):
+seconds += self.time_to_int()
+return int_to_time(seconds)
+===
+Debugging
+Another way to access attributes is the built-in function vars, which takes an object and
+returns a dictionary that maps from attribute names (as strings) to their values:
+>>> p = Point(3, 4)
+>>> vars(p)
+{'y': 4, 'x': 3}
+For purposes of debugging, you might find it useful to keep this function handy:
+def print_attributes(obj):***************************
+for attr in vars(obj):
+print(attr, getattr(obj, attr))
+===*********************
+basically let eaach def fn in a class be distinct in its operations dnt need diff attrib from other classes. so if  discover a new way to implement a fn, u an redesign w/o having to redesign the entire code.
+
+Interface and implementation****************
+One of the goals of object-oriented design is to make software more maintainable, which
+means that you can keep the program working when other parts of the system change, and
+modify the program to meet new requirements.
+A design principle that helps achieve that goal is to keep interfaces separate from implementations.
+For objects, that means that the methods a class provides should not depend
+on how the attributes are represented.
+For example, in this chapter we developed a class that represents a time of day. Methods
+provided by this class include time_to_int, is_after, and add_time.
+We could implement those methods in several ways. The details of the implementation
+depend on how we represent time. In this chapter, the attributes of a Time object are hour,
+minute, and second.
+As an alternative, we could replace these attributes with a single integer representing the
+number of seconds since midnight. This implementation would make some methods, like
+is_after, easier to write, but it makes other methods harder.
+After you deploy a new class, you might discover a better implementation. If other parts
+of the program are using your class, it might be time-consuming and error-prone to change
+the interface.
+But if you designed the interface carefully, you can change the implementation without
+changing the interface, which means that other parts of the program don’t have to change.
+*************************
+=
+
+Inheritance
+=
+Variables like suit_names and rank_names, which are defined inside a class but outside
+of any method, are called class attributes because they are associated with the class object
+Card
+=
+To
+define a new class that inherits from an existing class, you put the name of the existing
+class in parentheses:
+class Hand(Deck):
+=====================
+There are several kinds of relationship between classes:
+• Objects in one class might contain references to objects in another class. For example,
+each Rectangle contains a reference to a Point, and each Deck contains references to
+many Cards. This kind of relationship is called HAS-A, as in, “a Rectangle has a
+Point.”
+• One class might inherit from another. This relationship is called IS-A, as in, “a Hand
+is a kind of a Deck.”
+• One class might depend on another in the sense that objects in one class take objects
+in the second class as parameters, or use objects in the second class as part of a
+computation. This kind of relationship is called a dependency
+================
+def find_defining_class(obj, meth_name):
+    for ty in type(obj).mro():
+        if meth_name in ty.__dict__:
+            return ty
+
+>>> hand = Hand()
+>>> find_defining_class(hand, 'shuffle')
+<class 'Card.Deck'>
+=================
+Conditional expressions
+y = math.log(x) if x > 0 else float('nan')
+
+def factorial(n):
+if n == 0:
+return 1
+else:
+return n * factorial(n-1)
+
+def factorial(n):
+return 1 if n == 0 else n * factorial(n-1)
+
+List comprehensions==============
+def capitalize_all(t):
+res = []
+for s in t:
+res.append(s.capitalize())
+return res
+We can write this more concisely using a list comprehension:
+
+def capitalize_all(t):
+return [s.capitalize() for s in t]
+
+The bracket operators indicate that we are constructing a new list. The expression inside
+the brackets specifies the elements of the list, and the for clause indicates what sequence
+we are traversing.
+========================Generator expressions
+The bracket operators indicate that we are constructing a new list. The expression inside
+the brackets specifies the elements of the list, and the for clause indicates what sequence
+we are traversing.
+==
+any and all
+any([False, False, True])
+True
+But it is often used with generator expressions:
+>>> any(letter == 't' for letter in 'monty')
+True
+def avoids(word, forbidden):
+return not any(letter in forbidden for letter in word)
+The function almost reads like English, “word avoids forbidden if there are not any forbidden
+letters in word.
+==
+Python provides another built-in type, called a set, that behaves like a collection of dictionary
+keys with no values. Adding elements to a set is fast; so is checking membership.
+And sets provide methods and operators to compute common set operations.
+For example, set subtraction is available as a method called difference or as an operator,
+-. So we can rewrite subtract like this:
+def subtract(d1, d2):
+return set(d1) - set(d2)
+=
+A Counter is like a set, except that if an element appears more than once, the Counter
+keeps track of how many times it appears. 
+=
+defaultdict
+==================================
+named tuples:*************
+lass Point:
+def __init__(self, x=0, y=0):
+self.x = x
+self.y = y
+def __str__(self):
+return '(%g, %g)' % (self.x, self.y)
+
+from collections import namedtuple
+Point = namedtuple('Point', ['x', 'y'])
+
+The first argument is the name of the class you want to create. The second is a list of the
+attributes Point objects should have, as strings. The return value from namedtuple is a class
+object:
+>>> Point
+<class '__main__.Point'>
+Point automatically provides methods like __init__ and __str__ so you don’t have to
+write them
+Named tuples provide a quick way to define simple classes. The drawback is that simple
+classes don’t always stay simple. You might decide later that you want to add methods
+to a named tuple. In that case, you could define a new class that inherits from the named
+tuple:
+class Pointier(Point):
+# add more methods here
+==================
+Gathering keyword args
+def printall(*args):
+print(args)
+printall(1, 2.0, '3')
+(1, 2.0, '3')
+=
+If you have a dictionary of keywords and values, you can use the scatter operator, ** to
+call a function:
+>>> d = dict(x=1, y=2)
+>>> Point(**d)
+Point(x=1, y=2)
+Without the scatter operator, the function would treat d as a single positional argument, so
+it would assign d to x and complain because there’s nothing to assign to y:
+=
+hashing######
+The total amount of work to run add n
+times is proportional to n, so the average time of each add is constant time!
 
 
 
