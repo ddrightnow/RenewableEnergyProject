@@ -1115,6 +1115,95 @@ def example5():
 global known
 known = dict()
 ===============
+Syntactically, a tuple is a comma-separated list of values:
+>>> t = 'a', 'b', 'c', 'd', 'e'
+Although it is not necessary, it is common to enclose tuples in parentheses:
+>>> t = ('a', 'b', 'c', 'd', 'e')
+To create a tuple with a single element, you have to include a final comma:
+>>> t1 = 'a',
+Another way to create a tuple is the built-in function tuple. With no argument, it creates
+an empty tuple:
+>>> t = tuple()
+tuple assignment
+a, b = b, a
+addr = 'monty@python.org'
+uname, domain = addr.split('@')
+Tuples as return values
+=
+* gathers arguments into a tuple
+The complement of gather is scatter. If you have a sequence of values and you want to pass
+it to a function as multiple arguments, you can use the * operator
+==
+zip is a built-in function that takes two or more sequences and returns a list of tuples where
+each tuple contains one element from each sequence.
+s = 'abcp'
+t = [0, 1, 2,2]
+p=[4,7,8,0]
+print(zip(s, t,p))
+
+for pair in zip(s, t,p):
+    print(pair)
+zip is not vectorized. so if say 3 elements, in one list, and 4 in another. it will stop at 3
+=
+You can use tuple assignment in a for loop to traverse a list of tuples:
+t = [('a', 0), ('b', 1), ('c', 2)]
+for letter, number in t:
+print(number, letter)
+=
+def has_match(t1, t2):
+for x, y in zip(t1, t2):
+if x == y:
+return True
+return False
+
+enumerate, gives no to an obj, e.g. 1 a, 2 b etc. can change parameter, index to start say 1 or 2etc.
+=
+Dictionaries have a method called items that returns a sequence of tuples, where each
+tuple is a key-value pair.
+=Combining dict with zip yields a concise way to create a dictionary:
+>>> d = dict(zip('abc', range(3)))
+>>> d
+{'a': 0, 'c': 2, 'b': 1}
+=
+Because tuples are immutable, they don’t provide methods like sort and reverse, which
+modify existing lists. But Python provides the built-in function sorted, which takes any
+sequence and returns a new list with the same elements in sorted order, and reversed,
+which takes a sequence and returns an iterator that traverses the list in reverse order.
+=
+]]]]]]]]]]]]]]]]]]]]]]Debugging
+Compound data structures are useful, but they are prone to what
+I call shape errors; that is, errors caused when a data structure has the wrong type, size, or
+structure. For example, if you are expecting a list with one integer and I give you a plain
+old integer (not in a list), it won’t work.
+To help debug these kinds of errors, I have written a module called structshape that
+provides a function, also called structshape, that takes any kind of data structure as
+an argument and returns a string that summarizes its shape.
+
+===
+To choose an element from a sequence at random, you can use choice:
+>>> t = [1, 2, 3]
+>>> random.choice(t)
+===
+******************Data structures
+thin wat u want to do with data - index, sort hv it permanent state, mutable etc so that u know whic data str to use - tuple, list,string.. tupl of str of lists etc..
+
+===Read write files
+To write a file, you have to open it with mode 'w' as a second parameter:
+>>> fout = open('output.txt', 'w')
+fout = open('output.txt', 'w')
+line1 = "This here's the wattle,\n"
+fout.write(line1)
+fout.close()
+=
+def ope(d):
+    open('{}.txt'.format(d),'w')
+==
+
+m='I have spotted %d camels.' % (56)
+print(m)
+u = 'In %d years I have spotted %g %s.' % (3, 0.1, 'camels')
+print(u)
+===
 
 
 
