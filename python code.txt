@@ -1611,10 +1611,62 @@ times is proportional to n, so the average time of each add is constant time!
 
 
 week 4 ===============================
+SVMs
+And also, it shows the corresponding points in the original input space. So just as we saw with the simple 1D and 2D examples earlier, the kernelized support vector machine tries to find the decision boundary with maximum margin between classes using a linear classifier in the transformed feature space not the original input space. 
+9:03
+The linear decision boundary learn feature space by linear SVM corresponds to a non-linear decision boundary In the original input space. So in this example, an ellipse like closed region in the input space. Now, one of the mathematically remarkable things about kernelized support vector machines, something referred to as the kernel trick, is that internally, the algorithm doesn't have to perform this actual transformation on the data points to the new high dimensional feature space. 
+====
+Gamma controls how far the influence of a single trending example reaches, which in turn affects how tightly the decision boundaries end up surrounding points in the input space. 
+12:41
+Small gamma means a larger similarity radius. So that points farther apart are considered similar. Which results in more points being group together and smoother decision boundaries.
+=
+## Cross-validation
+### Example based on k-NN classifier with fruit dataset (2 features)
+from sklearn.model_selection import cross_val_score
 
+clf = KNeighborsClassifier(n_neighbors = 5)
+X = X_fruits_2d.as_matrix()
+y = y_fruits_2d.as_matrix()
+cv_scores = cross_val_score(clf, X, y,cv=10) #cv parameter used to set no of folds
 
+print('Cross-validation scores (3-fold):', cv_scores)
+print('Mean cross-validation score (3-fold): {:.3f}'
+     .format(np.mean(cv_scores)))
+========================
+decision tree
+ Feature importance is typically a number between 0 and 1 that's assigned to an individual feature. It indicates how important that feature is to the overall prediction accuracy. A feature importance of zero means that the feature is not used at all in the prediction. A feature importance of one, means the feature perfectly predicts the target. Typically, feature importance numbers are always positive and they're normalized so they sum to one.
+=
+from adspy_shared_utilities import plot_feature_importances
 
+plt.figure(figsize=(10,4), dpi=80)
+plot_feature_importances(clf, iris.feature_names)
+plt.show()
 
+print('Feature importances: {}'.format(clf.feature_importances_))
+# Feature importance is typically a number between 0 and 1 that's assigned to an individual feature. It indicates how important 
+#that feature is to the overall prediction accuracy. A feature importance of zero means that the feature is not used at all in 
+#the prediction. A feature importance of one, means the feature perfectly predicts the target. Typically, feature importance 
+#numbers are always positive and they're normalized so they sum to one.
+=================
+### Dummy Classifiers
+DummyClassifier is a classifier that makes predictions using simple rules, which can be useful as a baseline for comparison against actual classifiers, especially with imbalanced classes.
+=
+from sklearn.dummy import DummyClassifier
+
+# Negative class (0) is most frequent
+dummy_majority = DummyClassifier(strategy = 'most_frequent').fit(X_train, y_train)
+# Therefore the dummy 'most_frequent' classifier always predicts class 0
+y_dummy_predictions = dummy_majority.predict(X_test)
+
+y_dummy_predictions
+=
+dummy_majority.score(X_test, y_test)
+=
+svm = SVC(kernel='linear', C=1).fit(X_train, y_train)
+svm.score(X_test, y_test)
+=
+Use list.sort() when you want to mutate the list, sorted() when you want a new sorted object back.
+=
 
 
 
