@@ -1666,8 +1666,14 @@ svm = SVC(kernel='linear', C=1).fit(X_train, y_train)
 svm.score(X_test, y_test)
 =
 Use list.sort() when you want to mutate the list, sorted() when you want a new sorted object back.
-=
-
+==================================
+=*********************diff lsvm ad linear regression
+===============================
+Key Differences
+Logistic Regression fits the data points as if they are along a continuous function.
+This isn't always the case for single-class classification, and so the function may have trouble classifying where P = 0.5
+SVM fits a function (hyperplane) that attempts to separate two classes of data that could be of multiple dimensions.
+SVM could have difficulty when the classes are not separable or there is not enough margin to fit a (n_dimensions - 1) hyperplane between the two classes.
 
 
 
