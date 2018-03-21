@@ -1674,6 +1674,8 @@ Logistic Regression fits the data points as if they are along a continuous funct
 This isn't always the case for single-class classification, and so the function may have trouble classifying where P = 0.5
 SVM fits a function (hyperplane) that attempts to separate two classes of data that could be of multiple dimensions.
 SVM could have difficulty when the classes are not separable or there is not enough margin to fit a (n_dimensions - 1) hyperplane between the two classes.
+=
+
 
 
 
