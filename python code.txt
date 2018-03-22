@@ -1733,8 +1733,24 @@ There is a family of unsupervised algorithms called Manifold Learning Algorithms
 An especially powerful manifold learning algorithm for visualizing your data is called t-SNE. t-SNE finds a two-dimensional representation of your data, such that the distances between points in the 2D scatterplot match as closely as possible the distances between the same points in the original high dimensional dataset. In particular, t-SNE gives much more weight to preserving information about distances between points that are neighbors. Here's an example of t-SNE applied to the images in 
 t-SNE tends to work better on datasets that have more well-defined local structure; in other words, more clearly defined patterns of neighbors. 
 ===============
+------agglo cluster
+One of the nice things about agglomerative clustering is that it automatically arranges the data into a hierarchy as an effect of the algorithm, reflecting the order and cluster distance at which each data point is assigned to successive clusters. 
+7:49
+This hierarchy can be useful to visualize using what's called a dendrogram, which can be used even with higher dimensional data. 
+=======
+DBSCAN is an acronym that stands for density-based spatial clustering of applications with noise. 
+One advantage of DBSCAN is that you don't need to specify the number of clusters in advance. 
 
+Another advantage is that it works well with datasets that have more complex cluster shapes. 
+It can also find points that are outliers that shouldn't reasonably be assigned to any cluster. DBSCAN is relatively efficient and can be used for large datasets. The main idea behind DBSCAN is that clusters represent areas in the dataspace that are more dense with data points, while being separated by regions that are empty or at least much less densely populate
+===================
+The two main parameters for DBSCAN are min samples and eps. 
+All points that lie in a more dense region are called core samples. 
+For a given data point, if there are min sample of other data points that lie within a distance of eps, that given data points is labeled as a core sample. 
 
+Then, all core samples that are with a distance of eps units apart are put into the same cluster. 
+In addition to points being categorized as core samples, points that don't end up belonging to any cluster are considered as noise. While points that are within a distance of eps units from core points, but not core points themselves, are termed boundary points. 
+===============================
 
 
 
