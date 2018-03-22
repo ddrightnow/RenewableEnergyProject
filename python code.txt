@@ -1675,6 +1675,40 @@ This isn't always the case for single-class classification, and so the function 
 SVM fits a function (hyperplane) that attempts to separate two classes of data that could be of multiple dimensions.
 SVM could have difficulty when the classes are not separable or there is not enough margin to fit a (n_dimensions - 1) hyperplane between the two classes.
 =
+neural networks***************//////////+++++++++++++++++++++++
+Solver is the algorithm that actually does the numerical work of finding the optimal weights. And one intuitive way of visualizing this process. Is that all of the solver algorithms have to do a kind of hill-climbing in a very bumpy landscape, with lots of local minima. Where each local minimum corresponds to a locally optimal set of weights. That is, a choice of weight setting that's better than any nearby choices of weights. So across this whole landscape of very bumpy local minima. Some will have higher validation scores on the test data, and some will have lower. So depending on the initial random initialization of the weights. And the nature of the trajectory in the search path that a solver takes through this bumpy landscape. The solver can end up at different local minima, which can have different validation scores. The default solver, adam, tends to be both efficient and effective on large data sets, with thousands of training examples. For small data sets, like many of the ones we use in these examples, the lbfgs solver tends to be faster, and find more effective weights. You can find further details on these more advanced settings in the documentation for scikit-learn. 
+==================
+===========
+===================
+At the end of this process, the network attempts to make a prediction as to what’s in the picture. At first, these predictions will appear as random guesses, as no real learning has taken place yet. If the input image is an apple, but “orange” is predicted, the network’s inner layers will need to be adjusted.
+
+The adjustments are carried out through a process called backpropagation to increase the likelihood of predicting “apple” for that same image the next time around. This happens over and over until the predictions are more or less accurate and don’t seem to be improving.
+=
+The job (which they’ve learned “on the job”) of both the apple and orange nodes is essentially to “vote” for the feature maps that contain their respective fruits. So, the more the “apple” node thinks a particular feature map contains “apple” features, the more votes it sends to that feature map. Both nodes have to vote on every single feature map, regardless of what it contains. So in this case, the “orange” node won’t send many votes to any of the feature maps, because they don’t really contain any “orange” features. In the end, the node that has sent the most votes out — in this example, the “apple” node — can be considered the network’s “answer,” though it’s not quite that simple.
+=
+=============feature engr
+Features that are usable for one data set often are not usable for other data sets (for example the next image data set only contains land animals). The difficulty of feature engineering and the effort involved is the main reason to seek algorithms that can learn features; that is, algorithms that automatically engineer features.
+--===
+
+Feature learning can be thought of as Feature Engineering done automatically by algorithms. In deep learning, convolutional layers are exceptionally good at finding good features in images to the next layer to form a hierarchy of nonlinear features that grow in complexity (e.g. blobs, edges -> noses, eyes, cheeks -> faces). The final layer(s) use all these generated features for classification or regression (the last layer in a convolutional net is, essentially, multinomial logistic regression)
+===========
+activa fn
+In contrast, the features of 1000 layers of pure linear transformations can be reproduced by a single layer (because a chain of matrix multiplication can always be represented by a single matrix multiplication). This is why non-linear activation functions are so important in deep learning.
+====
+More recent convolutional networks use inception modules (see inception) which use 1×1 convolutional kernels to reduce the memory consumption further while speeding up the computation (and thus training)
+=
+Data leakage==================
+You model has learned something, but the thing that it learned is a quirk of the data and not something about the customers that you’re actually trying to model.
+=
+Customer 11125 has 0 spend on movies and 0 spend on electronics. If the store only sells jewelry, movies, and electronics, then the only way that customer 11125 can possibly be in the dataset is if he bought jewelry. Due to the way that the data was collected and formatted, the condition of having 0 spend on movies and electronics logically implies the condition of having bought jewelry.
+=
+There’s no such thing as a time machine
+The accidental introduction of time-travel into the data is probably the most common source of leakage in machine learning. Due to the way that data is often stored and aggregated, data that are generated at different times may be stored in the same place. A general rule might be: if X happened after Y, you shouldn’t build a model that uses X to predict Y. Claudia Perlich calls this the No Time Machine Condition (NTMC). A model that determines whether it rains at 9:00 AM as a function of whether the road is wet at 9:05 AM might be very accurate, but it will also be very useless.
+=
+ut this seems like it’s probably the exact opposite of reality! The data collection process results in a negative relationship between the variables DOWNTIME_MINS_2015 and CHURNED, but the real-life process that relates real-life customer churn to real-life downtime minutes could very well have a positive relationship between those two variables! This results in the perverse outcome where the more likely your model says a customer is to churn, the less likely they really are to churn! Your “predictive model” is not only making inaccurate predictions, it is making predictions which are systematically wrong. You’re anti-predicting! Your churn prediction model predicts non-churn! Data leakage has created a model which truly is worse than having no model at all, all the while performing outstandingly well in backtesting.
+=
+
+
 
 
 
