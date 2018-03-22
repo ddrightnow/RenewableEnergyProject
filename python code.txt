@@ -1709,8 +1709,20 @@ ut this seems like it’s probably the exact opposite of reality! The data collect
 =
 The single most important thing that you can do to prevent data leakage from seeping into your models is to understand the process that generates the data, and how that process relates to the process that you’re actually trying to simulate in order to form predictions. The whole point of modelling is to learn things about some process out there in the real world, and in some sense to approximate that real-world process. But models don’t see the real-world process. They see the data. Leakage happens when there is some systematic correlation between features and outcomes in the data that either does not exist or is not observable in the real world. In order to spot that deceptive correlation, it is crucial to understand the data that you are working with. How is it collected? How is it aggregated? What are the criteria for being included in this sample?
 ==========================
-
-
+(i) An "account
+number" feature, for the problem of predicting whether a potential
+customer would open an account at a bank. Obviously, assignment
+of such an account number is only done after an account has been
+opened. (ii) An "interviewer name" feature, in a cellular company
+churn prediction problem. While the information “who interviewed
+the client when they churned” appears innocent enough, it
+turns out that a specific salesperson was assigned to take over
+cases where customers had already notified they intend to churn
+=
+no of layers = deep learning algo 
+(no of inputs + no of outputs)^0.5 + (1 to 10). to fix the constant value (last part, 0 to 10)
+=== iteratively tune the configuration during training using a number of ancillary algorithms
+===========
 
 
 
