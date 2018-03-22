@@ -1724,6 +1724,14 @@ no of layers = deep learning algo
 === iteratively tune the configuration during training using a number of ancillary algorithms
 ===========
 
+UNSUPERVISED:
+------ dimensionality reduction:
+With more than two dimensions, the process of finding successive principal components at right angles to the previous ones would continue until the desired number of principal components is reached. One result of applying PCA is that we 
+=
+There is a family of unsupervised algorithms called Manifold Learning Algorithms that are very good at finding low dimensional structure in high dimensional data and are very useful for visualizations. One classic example of a low dimensional subset in a high dimensional space is this data set in three dimensions, where the points all lie on a two-dimensional sheet with an interesting shape. This lower dimensional sheet within a higher dimensional space is called the manifold. PCA is not sophisticated enough to find this interesting structure. One widely used manifold learning method is called multi-dimensional scaling, or MDS. There are many flavors of MDS, but they all have the same general goal; to visualize a high dimensional dataset and project it onto a lower dimensional space - in most cases, a two-dimensional page - in a way that preserves information about how the points in the original data space are close to each other. In this way, you can find and 
+========
+An especially powerful manifold learning algorithm for visualizing your data is called t-SNE. t-SNE finds a two-dimensional representation of your data, such that the distances between points in the 2D scatterplot match as closely as possible the distances between the same points in the original high dimensional dataset. In particular, t-SNE gives much more weight to preserving information about distances between points that are neighbors. Here's an example of t-SNE applied to the images in 
+===============
 
 
 
