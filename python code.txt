@@ -1802,6 +1802,24 @@ And you need better models, and you can learn those using supervised learning,
 nlt nlp text parsing
 ==
 
+text classification:
+The bag-of-words approach is simple and commonly used way to represent text for use in machine learning, which ignores structure and only counts how often each word occurs. CountVectorizer allows us to use the bag-of-words approach by converting a collection of text documents into a matrix of token counts. 
+========================
+Fitting the CountVectorizer consists of the tokenization of the trained data and building of the vocabulary. 
+
+Fitting the CountVectorizer tokenizes each document by finding all sequences of characters of at least two letters or numbers separated by word boundaries. Converts everything to lowercase and builds a vocabulary using these tokens. 
+==============
+High weight is given to terms that appear often in a particular document, but don't appear often in the corpus. Features with low tf–idf are either commonly used across all documents or rarely used and only occur in long documents. 
+
+Features with high tf–idf are frequently used within specific documents, but rarely used across all documents. 
+
+====
+One way we can add some context is by adding sequences of word features known as n-grams. For example, bigrams, which count pairs of adjacent words, could give us features such as is working versus not working. And trigrams, which give us triplets of adjacent words, could give us features such as not an issue. 
+
+To create these n-gram features, we'll pass in a tuple to the parameter ngram_range, where the values correspond to the minimum length and maximum lengths of sequences. 
+
+For example, if I pass in the tuple, 1, 2, CountVectorizer will create features using the individual words, as well as the bigrams. 
+========================
 
 
 
