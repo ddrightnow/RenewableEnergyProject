@@ -1821,9 +1821,19 @@ To create these n-gram features, we'll pass in a tuple to the parameter ngram_ra
 For example, if I pass in the tuple, 1, 2, CountVectorizer will create features using the individual words, as well as the bigrams. 
 ========================
 
+# just how much data did we lose?
+print("Columns in original dataset: %d \n" % nfl_data.shape[1])
+print("Columns with na's dropped: %d" % columns_with_na_dropped.shape[1])
 
+=++++
+Columns in original dataset: 102 
 
+Columns with na's dropped: 41
 
+axis = 0 applies the method row-by-row.
+
+axis = 1 applies the method column-by-column.
+==================
 
 
 
