@@ -1834,7 +1834,13 @@ axis = 0 applies the method row-by-row.
 
 axis = 1 applies the method column-by-column.
 ==================
+*************//////////////-----------+++++++++++
+Scaling
+ you'll only want to normalize your data if you're going to be using a machine learning or statistics technique that assumes your data is normally distributed. Some examples of these include t-tests, ANOVAs, linear regression, linear discriminant analysis (LDA) and Gaussian naive Bayes. (Pro tip: any method with "Gaussian" in the name probably assumes normality.)
+**************-------------------------+++++++++++++++++
+## Normalization
 
+Scaling just changes the range of your data. Normalization is a more radical transformation. The point of normalization is to change your observations so that they can be described as a normal distribution.
 
 
 
