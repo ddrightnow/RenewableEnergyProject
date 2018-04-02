@@ -1876,6 +1876,8 @@ And for sequence data. So for example, audio has a temporal component, right? Au
 
 
 
+
+
 ===========
 
 https://ae.linkedin.com/in/kirill-smolyakov-5751b8145
