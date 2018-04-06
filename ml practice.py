@@ -10,4 +10,6 @@ y = np.zeros((3, 3, 4))
 
 print(y.shape[1])
 
-print(11.9//2)
+print(11.9//2)  #floor division
+
+print(np.random.rand(3,2))
