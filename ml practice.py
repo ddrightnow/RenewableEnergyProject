@@ -10,4 +10,4 @@ y = np.zeros((3, 3, 4))
 
 print(y.shape[1])
 
-print(y[0])
+print(11.9//2)
