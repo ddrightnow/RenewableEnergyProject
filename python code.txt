@@ -1867,7 +1867,9 @@ And for sequence data. So for example, audio has a temporal component, right? Au
 http://bit.ly/2uGREG3
 
 
+===
 
+To create an environment, use conda create -n env_name list of packages in your terminal. Here -n env_name sets the name of your environment (-n for name) and list of packages is the list of packages you want installed in the environment. For example, to create an environment named my_env and install numpy in it, type conda create -n my_env numpy
 
 
 
