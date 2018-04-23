@@ -1871,7 +1871,8 @@ http://bit.ly/2uGREG3
 
 RL 1 - ML REINFORCE
 POLICY - a fn that tells you wat action you should take at any stage you come across
-
+markov is all about - what action  should take at a stage; not the seqece of actions aka a plan, of things you ought to follow
+tells u wat to do everywhere as against a plan and is robust to 
 
 
 
