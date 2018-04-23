@@ -1872,8 +1872,12 @@ http://bit.ly/2uGREG3
 To create an environment, use conda create -n env_name list of packages in your terminal. Here -n env_name sets the name of your environment (-n for name) and list of packages is the list of packages you want installed in the environment. For example, to create an environment named my_env and install numpy in it, type conda create -n my_env numpy
 
 
+===
+Listing environments
+If you forget what your environments are named (happens to me sometimes), use conda env list to list out all the environments you've created. You should see a list of environments, there will be an asterisk next to the environment you're currently in. The default environment, the environment used when you aren't in one, is called root.
 
-
+Removing environments
+If there are environments you don't use anymore, conda env remove -n env_name will remove the specified environment (here, named env_name).
 
 
 
