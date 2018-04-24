@@ -1874,6 +1874,8 @@ POLICY - a fn that tells you wat action you should take at any stage you come ac
 markov is all about - what action  should take at a stage; not the seqece of actions aka a plan, of things you ought to follow
 tells u wat to do everywhere as against a plan and is robust to stochasticity of the world.
 stochastic is an adjective in English that describes something that was randomly determined
+======
+NDE
 
 
 ===========
