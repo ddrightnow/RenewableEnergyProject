@@ -1878,6 +1878,9 @@ stochastic is an adjective in English that describes something that was randomly
 NDE
 
 
+scikit-learn library to create your models. When coding, this library is written as sklearn, as you will see in the sample code. Scikit-learn is easily the most popular library for modeling the types of data typically stored in DataFrames. - ml
+
+
 ===========
 
 https://ae.linkedin.com/in/kirill-smolyakov-5751b8145
