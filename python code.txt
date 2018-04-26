@@ -1880,6 +1880,9 @@ NDE
 
 scikit-learn library to create your models. When coding, this library is written as sklearn, as you will see in the sample code. Scikit-learn is easily the most popular library for modeling the types of data typically stored in DataFrames. - ml
 
+xis = 0 applies the method row-by-row.
+
+axis = 1 applies the method column-by-column.
 
 ===========
 
