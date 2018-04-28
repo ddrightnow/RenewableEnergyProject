@@ -1875,18 +1875,7 @@ markov is all about - what action  should take at a stage; not the seqece of act
 tells u wat to do everywhere as against a plan and is robust to stochasticity of the world.
 stochastic is an adjective in English that describes something that was randomly determined
 ======
-NDE
 
-
-scikit-learn library to create your models. When coding, this library is written as sklearn, as you will see in the sample code. Scikit-learn is easily the most popular library for modeling the types of data typically stored in DataFrames. - ml
-
-xis = 0 applies the method row-by-row.
-
-axis = 1 applies the method column-by-column.
-
-Fitting the CountVectorizer consists of the tokenization of the trained data and building of the vocabulary. 
-
-Fitting the CountVectorizer tokenizes each document by finding all sequences of characters of at least two letters or numbers separated by word boundaries. Converts everything to lowercase and builds a vocabulary using these tokens
 ===========
 
 https://ae.linkedin.com/in/kirill-smolyakov-5751b8145
