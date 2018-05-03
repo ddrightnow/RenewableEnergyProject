@@ -1876,6 +1876,11 @@ tells u wat to do everywhere as against a plan and is robust to stochasticity of
 stochastic is an adjective in English that describes something that was randomly determined
 ======
 
+y = melbourne_data.Price
+melbourne_predictors = ['Rooms', 'Bathroom', 'Landsize', 'BuildingArea', 'YearBuilt', 'Lattitude', 'Longtitude']
+X = melbourne_data[melbourne_predictors]
+# Define model
+melbourne_model = DecisionTreeRegressor()
 ===========
 
 https://ae.linkedin.com/in/kirill-smolyakov-5751b8145
