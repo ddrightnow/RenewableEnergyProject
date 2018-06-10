@@ -5,8 +5,22 @@ Created on Fri Jun  8 00:06:12 2018
 @author: Dmob
 """
 
-def a(x,y):
-    b=(int(x)**2)+y
-    return (b)
+def a():
+    print('+', '-'*4,end=' ')
+    print('+', '-'*4,end=' ')
+    print('+')
+
+
+
+def b():
+    print ('|','',' ',' ','|','',' ',' ','|')
+    print ('|','',' ',' ','|','',' ',' ','|')
+    print ('|','',' ',' ','|','',' ',' ','|')
+    print ('|','',' ',' ','|','',' ',' ','|')
+
+def c():
+    return a(),b(),a(),b(),a()
     
-print(a(3.9,23))
+
+
+c()
