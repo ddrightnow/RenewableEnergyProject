@@ -5,10 +5,6 @@ Created on Fri Jun  8 00:06:12 2018
 @author: Dmob
 """
 
+n=23
 
-
-minutes = 105
-a = minutes // 60
-r = minutes % 10
-print(a)
-print(r)
+print (n% 3 ==0 or n%2==0)
