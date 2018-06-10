@@ -20,10 +20,12 @@ import re
 
 
 
-fruit = 'banana'
+def find(word, letter,index):
+    #index = 0
+    while index < len(word):
+        if word[index] == letter:
+            return index
+        index = index + 1
+    return -1
 
-index = len(fruit)-1
-while index >=0:
-    letter = fruit[index]
-    print(letter)
-    index = index - 1
+print(find('mango','o',0))
