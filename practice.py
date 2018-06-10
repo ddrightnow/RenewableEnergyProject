@@ -20,25 +20,10 @@ import re
 
 
 
-def is_power(a,b):
-    if(a%b != 0):
-        return False
-    elif(a/b == 1):
-        return True
-    else:
-        return is_power(a/b,b)
+fruit = 'banana'
 
-print(is_power(81,9))
-
-'''
-    elif a % b !=0 or b!=a**(1/i):
-        for i in range (5):
-            if a % b !=0 and b!=a**(1/i):
-                i=i+1
-                return True
-            else:
-                return False
-    
-print(is_power(81,9))
-#elif b = a**(1/(n+1))
-'''
+index = len(fruit)-1
+while index >=0:
+    letter = fruit[index]
+    print(letter)
+    index = index - 1
