@@ -1905,7 +1905,7 @@ innerHTML //DANGEROUS
 
 parentElement
 children
-1
+
 ##It is important to CACHE selectors in variables
 ==================
 
