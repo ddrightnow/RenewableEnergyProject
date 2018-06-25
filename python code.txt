@@ -1908,7 +1908,8 @@ children
 
 ##It is important to CACHE selectors in variables
 ==================
-
+.loc for label based indexing or
+.iloc for positional indexing
  
 
 
