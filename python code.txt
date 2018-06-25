@@ -1910,7 +1910,23 @@ children
 ==================
 .loc for label based indexing or
 .iloc for positional indexing
- 
+==========
+'''
+#train_test_split
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 50, random_state = 0)
+
+#Standardize the data
+from sklearn.preprocessing import StandardScaler
+sc_X = StandardScaler()
+
+X_train = sc_X.fit_transform(X_train)
+X_test = sc_X.transform(X_test)
+
+#Impute missing values at random
+prop = int(X_train.size * 0.5) #Set the % of values to be replaced
+prop1 = int(X_test.size * 0.5)
+''' 
 
 
 popo
