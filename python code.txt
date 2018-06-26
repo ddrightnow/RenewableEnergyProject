@@ -1926,6 +1926,5 @@ MLPClassifier(activation='relu', alpha=1e-05, batch_size='auto',
        warm_start=False)
 
 
-popo
 ==========
 https://ae.linkedin.com/in/kirill-smolyakov-5751b8145
