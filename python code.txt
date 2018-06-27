@@ -1950,8 +1950,6 @@ https://www.quora.com/Is-SAS-certification-useful
 https://www.sas.com/en_my/training/academy-data-science.html
 https://www.cio.com/article/3209911/certifications/big-data-certifications-that-will-pay-off.html
 
- 
-
 predict_prob() to get classes with RF, use soft.
 
 Baggi,nn,swm,pocle pca,use pca seeting to account for max var ratio eg 95%
