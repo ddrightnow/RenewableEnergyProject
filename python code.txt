@@ -1956,11 +1956,7 @@ predict_prob() to get classes with RF, use soft.
 
 Baggi,nn,swm,pocle pca,use pca seeting to account for max var ratio eg 95%
 
- 
-
 https://medium.com/implodinggradients/tensorflow-or-keras-which-one-should-i-learn-5dd7fa3f9ca0
-
- 
 
 https://www.quora.com/What-is-the-future-of-TensorFlow
 
