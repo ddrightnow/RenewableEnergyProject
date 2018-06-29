@@ -1958,7 +1958,36 @@ https://medium.com/implodinggradients/tensorflow-or-keras-which-one-should-i-lea
 
 https://www.quora.com/What-is-the-future-of-TensorFlow
 ===
+CLOUD AUTOML google
+http://simplify.ai/
+https://indico.io/
+https://lobe.ai/
+==
+ef9a74eb187f473696dcf4ef67c43a71
+===
+ onRouteChange = ()=>{
+    if (route === 'SignIn'){
+    this.setState({route: 'SignIn3'}
+  )
+  else{this.setState({route: 'SignIn'})
 
+
+====
+
+
+  { /*onRouteChange = ()=>{
+    this.setState({route: 'SignIn3'})
+  };*/ }  
+
+===
+
+{ this.state.route === 'SignIn'
+===
+
+if (this.state.route === 'SignInOut'){
+    this.setState({route: 'SignIn'}
+  )}
+  else{this.setState({route: 'SignInOut'})
 
 =========
 https://ae.linkedin.com/in/kirill-smolyakov-5751b8145
