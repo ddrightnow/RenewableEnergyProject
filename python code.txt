@@ -1990,6 +1990,15 @@ if (this.state.route === 'SignInOut'){
   else{this.setState({route: 'SignInOut'})
 ==
 <Navigation isSignedIn ={this.state.isSignedIn}
+==
+stupid thing - waSted my time::::::;;
+
+onRouteChange = (route)=>{
+  if (route === 'SignIn'){
+    this.setState({isSignedIn:false})} else if (route === 'home'){
+      this.setState({isSignedIn: true})
+
+    }
 
 =========
 https://ae.linkedin.com/in/kirill-smolyakov-5751b8145
