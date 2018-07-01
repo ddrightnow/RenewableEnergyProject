@@ -2010,6 +2010,6 @@ const user= {
 	hobby: 'piano'
 }
 =
-
+ok
 =========
 https://ae.linkedin.com/in/kirill-smolyakov-5751b8145
