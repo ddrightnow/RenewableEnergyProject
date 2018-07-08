@@ -14,3 +14,4 @@ Object.assign(this.state.user, {entries: count})
 CREATE TABLE table_name (column_1 datatype, column_2 datatype, column_3 datatype);
 \ test 2 -> change db
 \d   -> view table
+\q -> quit
