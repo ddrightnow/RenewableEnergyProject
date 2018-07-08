@@ -1,0 +1,16 @@
+npm i npm@latest -g
+
+
+({onRouteChange}) =>{
+
+https://secure.i.telegraph.co.uk/multimedia/archive/03249/archetypal-female-_3249633c.jpg
+
+https://beautyhealthtips.in/wp-content/uploads/2017/09/face_shine_glow.jpg
+==
+
+Object.assign(this.state.user, {entries: count})
+
+
+CREATE TABLE table_name (column_1 datatype, column_2 datatype, column_3 datatype);
+\ test 2 -> change db
+\d   -> view table
