@@ -37,12 +37,25 @@ test2=# select sum(age) from users;
 test2=# select count(name) from users;
 
 
+create table login (ID serial NOT NULL PRIMARY KEY, secret VARCHAR (100) NOT NULL, name text UNIQUE NOT NULL);
+
+insert into login (secret, name) values ('abc', 'Dari');
+
+======= db smartbrain tables=======
+create table users (
+ID serial NOT NULL PRIMARY KEY,
+name VARCHAR (100),
+email text UNIQUE NOT NULL,
+entries BIGINT DEFAULT 0,
+joined TIMESTAMP NOT NULL
+);
 
 
-
-
-
-
+create table login(
+ID serial PRIMARY KEY,
+hash VARCHAR (100) NOT NULL,
+email text UNIQUE NOT NULL,
+);
 
 
 
