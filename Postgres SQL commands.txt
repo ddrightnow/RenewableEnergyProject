@@ -20,7 +20,21 @@ INSERT INTO table (column1, column2, ... ) VALUES ('are'.31.'100-12-12')
 alter table users add score smallint;
 
 update users set score =100 WHERE name = 'hi'or 'Dare'
+test2=# select avg(score) from users;
+         avg
+---------------------
+ 66.6666666666666667
+(1 row)
 
+
+test2=# select sum(age) from users;
+ sum
+-----
+ 237
+(1 row)
+
+
+test2=# select count(name) from users;
 
 
 
