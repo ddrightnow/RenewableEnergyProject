@@ -19,6 +19,8 @@ CREATE TABLE table_name (column_1 datatype, column_2 datatype, column_3 datatype
 INSERT INTO table (column1, column2, ... ) VALUES ('are'.31.'100-12-12')
 alter table users add score smallint;
 
+update users set score =100 WHERE name = 'hi'or 'Dare'
+
 
 
 
