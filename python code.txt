@@ -2009,6 +2009,28 @@ const user= {
 =========
 https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaO0ebhM8DlKWbHffXpob7x-kYMP9qV-XIbBaM_u9Kf_Gwsrei9A
 
+
+====
+deleted windows path to make space for more
+C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\
+
+PATH=%PATH%;C:\Program Files\PostgreSQL\9.2\bin
+
+
+===
+$npm install --save bcrypt-nodejs && npm uninstall --save bcrypt
+ env|grep PATH
+set PATH=%PATH%;C:\Program Files\PostgreSQL\10\bin\
+PATH=%PATH%;C:\Program Files\PostgreSQL\10\bin
+
+set DATABASE_URL=postgres://localhost/databasename
+
+
+PGPASSWORD=pass psql -U user -h host.com -p 5432 -d database-name 
+PGPASSWORD=Dimudon9@ psql -U DMOB-h host.com -p 5432 -d postgresql-amorphous-96725 
+
+
+https://enigmatic-taiga-56030.herokuapp.com/
 #BigData #Algorithms #DataUsage #NationalPolicy
 ===========
 kim@yahoo
