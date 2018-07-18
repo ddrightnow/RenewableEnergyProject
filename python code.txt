@@ -2084,6 +2084,6 @@ joined TIMESTAMP NOT NULL
 ==
 CREATE TABLE login(id serial PRIMARY KEY,hash varchar(100) NOT NULL,email text UNIQUE NOT NULL);
 
-=======
+========
 
 c.NotebookApp.keyfile = r'C:\Users\Dmob\certs\mycert.pem' # path to the certificate key we generated
