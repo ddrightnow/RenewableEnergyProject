@@ -2027,8 +2027,6 @@ set DATABASE_URL=postgres://localhost/databasename
 
 postgres -D /usr/local/pgsql/data
 
-PGPASSWORD=pass psql -U user -h host.com -p 5432 -d database-name 
-PGPASSWORD=Dimudon9@ psql -U DMOB-h host.com -p 5432 -d postgresql-amorphous-96725 
 
 
 https://enigmatic-taiga-56030.herokuapp.com/
@@ -2078,12 +2076,13 @@ email text UNIQUE NOT NULL
 
 create table  users( id serial PRIMARY KEY,
 name varchar(100),
-email text UNIQUE NOT NULL
+email text UNIQUE NOT NULL,
 entries BIGINT DEFAULT 0,
 joined TIMESTAMP NOT NULL
 );
 
+==
+CREATE TABLE login(id serial PRIMARY KEY,hash varchar(100) NOT NULL,email text UNIQUE NOT NULL);
 
-
-
+======
 
