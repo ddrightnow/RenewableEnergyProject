@@ -1,4 +1,4 @@
-python code
+ fopython code
 
 To create an environment, use conda create -n env_name list of packages in your terminal. Here -n env_name sets the name of your environment (-n for name) and list of packages is the list of packages you want installed in the environment. For example, to create an environment named my_env and install numpy in it, type conda create -n my_env numpy
 
@@ -2087,3 +2087,4 @@ CREATE TABLE login(id serial PRIMARY KEY,hash varchar(100) NOT NULL,email text U
 ========
 
 c.NotebookApp.keyfile = r'C:\Users\Dmob\certs\mycert.pem' # path to the certificate key we generated
+==================
